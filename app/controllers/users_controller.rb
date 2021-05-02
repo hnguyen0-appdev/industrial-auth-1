@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     end
 
     def ensure_current_user_is_accepted_follower
-      if current_user != :followers
+      if current_user.accepted_sent_follow_requests.find_by(recipient_id: @user.id) != nil
         redirect_back fallback_location: root_url, alert: "You're not authorized for that."
       end
     end
