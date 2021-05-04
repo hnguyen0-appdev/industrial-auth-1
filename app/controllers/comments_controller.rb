@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
-  before_action :ensure_current_user_is_owner, only: [:edit, :destroy]
+  before_action :ensure_current_user_is_author, only: [:edit, :destroy]
 
   # GET /comments or /comments.json
   def index
@@ -70,8 +70,8 @@ class CommentsController < ApplicationController
     end
 
     # Only allow owners to edit and delete their own comments
-    def ensure_current_user_is_owner
-      if current_user != comment.owner
+    def ensure_current_user_is_author
+      if current_user != comment.author
         redirect_back fallback_location: root_url, alert: "You are not authorized to do that"
       end
     end

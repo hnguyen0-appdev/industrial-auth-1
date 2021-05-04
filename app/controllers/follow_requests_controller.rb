@@ -71,7 +71,7 @@ class FollowRequestsController < ApplicationController
     
     # Only allow users to see their own Pending follow requests
     def ensure_current_user_is_owner
-      if current_user != follow_request.owner
+      if current_user.id != recipient_id
         redirect_back fallback_location: root_url, alert: "You are not authorized to do that"
     end
 
